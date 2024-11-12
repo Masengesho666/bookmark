@@ -1,85 +1,83 @@
+const websiteNameInput = document.getElementById("websiteName");
+const websiteURLInput = document.getElementById("websiteURL");
+const addBookmarkButton = document.getElementById("addBookmark");
+const bookmarksList = document.getElementById("bookmarksList");
 
 
-const addBookmarkButton = document.getElementById('addBookmarkButton');
-let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [] ; 
+addBookmarkButton.addEventListener("click", addBookmark);
 
-addBookmarks();
+function addBookmark() {
+    const websiteName = websiteNameInput.value.trim();
+    const websiteURL = websiteURLInput.value.trim();
 
-addBookmarkButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('websiteName').value;
-    const url = document.getElementById('websiteURL').value;
-
-    if (!name) {
-        const nameError = document.getElementById('nameError');
-        nameError.innerText = 'Please enter website name';
-        return;
-    }
-    nameError.innerHTML = '';
-
-    if (!url) {
-        const urlError = document.getElementById('urlError');
-        urlError.innerText = 'Please enter a valid website URL';
+    if (!websiteName || !websiteURL) {
+        alert("Please enter both website name and URL.");
         return;
     }
 
-    const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/.*)?$/;
-    if (!urlPattern.test(url)) {
-        const urlError = document.getElementById('urlError');
-        urlError.innerText = 'Please enter a valid website URL';
-        return;
-    }
-    urlError.innerHTML = '';
+    
+    const bookmark = {
+        name: websiteName,
+        url: websiteURL
+    };
 
-    const bookmark = { name, url };
+    
+    saveBookmark(bookmark);
+
+    
+    websiteNameInput.value = "";
+    websiteURLInput.value = "";
+
+    
+    displayBookmarks();
+}
+
+function saveBookmark(bookmark) {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
     bookmarks.push(bookmark);
-
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-
-    document.getElementById('websiteName').value = '';
-    document.getElementById('websiteURL').value = '';
-
-    addBookmarks();
-});
-
-function deleteBookmark(index) {
-    bookmarks.splice(index, 1);
-
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-
-    addBookmarks();
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 }
 
-function editBookmark(index) {
-    const newName = prompt("Enter the new name:", bookmarks[index].name);
-    const newURL = prompt("Enter the new URL:", bookmarks[index].url);
-
-    if (newName && newURL) {
-        bookmarks[index] = { name: newName, url: newURL };
-
-        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-
-        addBookmarks();
-    }
-}
-
-function addBookmarks() {
-    const bookmarksList = document.getElementById('bookmarksList');
-    bookmarksList.innerHTML = '';
+function displayBookmarks() {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    bookmarksList.innerHTML = "";
 
     bookmarks.forEach((bookmark, index) => {
-        const bookmarkDiv = document.createElement('div');
-        bookmarkDiv.classList.add('bookmark');
+    
+        const bookmarkCard = document.createElement("div");
+        bookmarkCard.classList.add("bookmark");
 
-        bookmarkDiv.innerHTML = `
-            <strong>${bookmark.name}</strong><br>
-            <a href="${bookmark.url}" target="_blank"><i class="fas fa-globe"></i>${bookmark.url}</a><br>
-            <div>
-                <button class="edit" onclick="editBookmark(${index})"><i class="fas fa-edit"></i>Edit</button>
-                <button onclick="deleteBookmark(${index})"><i class="fas fa-trash"></i>Delete</button>
+        
+        bookmarkCard.innerHTML = `
+            <h3>${bookmark.name}</h3>
+            <a href="${bookmark.url}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i>${bookmark.url}</a>    
+            <div class="actions">
+         <button class="edit" onclick="editBookmark(${index})">
+         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  Edit</button>
+                <button class="delete" onclick="deleteBookmark(${index})">
+                 <i class="fa fa-trash" aria-hidden="true"></i>   Delete</button>
             </div>
         `;
 
-        bookmarksList.appendChild(bookmarkDiv);
+        bookmarksList.appendChild(bookmarkCard);
     });
 }
+
+function deleteBookmark(index) {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+    bookmarks.splice(index, 1);
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    displayBookmarks();
+}
+
+function editBookmark(index) {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+    const bookmark = bookmarks[index];
+
+    websiteNameInput.value = bookmark.name;
+    websiteURLInput.value = bookmark.url;
+
+    deleteBookmark(index);
+}
+
+displayBookmarks();

@@ -2,170 +2,121 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 body {
-    font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    background-color: #f4f4f4;
-}
-
-.container {
-    width: 40%;
-    padding: 20px;
-    background: white;
-    box-shadow: 0 4px 8px #00000033;
-    border-radius: 10px;
-    text-align: center;
-    margin: 30px 0 0 0;
+    background-color: #f5f7fa;
+    color: #333;
 }
 
 h1 {
-    color: #08c0d8;
+    font-size: 2rem;
+    margin-top: 20px;
+    color: #0c1631;
+}
+.web {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.form input {
+input[type="text"], input[type="url"] {
+    width: 280px;
     padding: 10px;
-    margin: 5px;
-    width: 90%;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     outline: none;
-    border-radius: 10px;
-    border: 2px solid #08c0d8;
-}
-
-.form input:hover {
-    border: 2px solid green;
-}
-
-.form button:hover {
-    background-color: #35dd3a;
-}
-
-.form input:focus {
-    border: 2px solid #0000ff;
 }
 
 button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #1d4ed8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    background-color: #4CAF50;
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 5px;
-    width: 50%;
+    transition: background-color 0.3s;
 }
 
-.bookmark {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    color: #474444;
-    padding: 10px;
-    background: #ffffff;
-    border-bottom: 1px solid #ddd;
-    border-radius: 10px;
-    margin: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px #00000033;
-}
-
-.bookmark div {
-    display: flex;
-    justify-content: space-between;
-}
-
-.bookmark a{
-    text-decoration: none;
-}
-
-.bookmark a:hover{
-    text-decoration: none;
-    color: #4CAF50;
-    font-size: 1.1rem;
-}
-
-.bookmark button {
-    width: 12vw;
-    height: 5vh;
-    padding: 5px;
-    margin: 5px;
-    background-color: #ff5722;
-    color: #ffffff;
-    border: none;
-    border-radius: 7px;
-}
-
-.bookmark button.edit {
-    background-color: #2196F3;
+button:hover {
+    background-color: #2563eb;
 }
 
 #bookmarksList {
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
     width: 80%;
-    margin: 5%;
+    max-width: 1000px;
+    margin-top: 20px;
 }
 
-.fas {
-    margin: 0 10px;
-    font-size: small;
+.bookmark {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.container .fas {
-    font-size: 2rem;
+.bookmark h3 {
+    font-size: 1.2rem;
+    color: #1e3a8a;
+    margin-bottom: 8px;
 }
 
-#urlError {
-    color: #ff0000;
+.bookmark a {
+    color: #1d4ed8;
+    text-decoration: none;
+    font-size: 0.9rem;
 }
 
-#nameError {
-    color: #ff0000;
+.bookmark a:hover {
+    text-decoration: underline;
 }
 
-
-@media (max-width: 768px) {
-    .container {
-        width: 80%; 
-        padding: 15px;
-    }
-
-    #bookmarksList {
-        grid-template-columns: 50% 50%; 
-    }
-
-    .bookmark button {
-        width: 18vw; 
-    }
+.bookmark .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
 
-@media (max-width: 480px) {
-    .container {
-        width: 90%;
-        padding: 10px;
-    }
+.bookmark button {
+    flex: 1;
+    padding: 8px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-    #bookmarksList {
-        grid-template-columns: 100%; 
-    }
+.bookmark .edit {
+    background-color: #10b981;
+    color: #fff;
+}
 
-    .bookmark button {
-        width: 100%; 
-    }
+.bookmark .edit:hover {
+    background-color: #059669;
+}
 
-    .form input {
-        width: 90%; 
-    }
+.bookmark .delete {
+    background-color: #ef4444;
+    color: #fff;
+}
 
-    .form button{
-        width: 40%;
-    }
-
-    h1 {
-        font-size: 1.5rem; 
-    }
+.bookmark .delete:hover {
+    background-color: #dc2626;
 }
